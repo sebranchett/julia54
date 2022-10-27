@@ -13,13 +13,8 @@
 
 module load 2022r2
 module load julia
-# py-matplotlib is needed to load the libiomp5.so library for Plots (workaround)
-module load py-matplotlib
-
-# this avoids the 'qt.qpa.xcb: could not connect to display' error for Plots
-export QT_QPA_PLATFORM="offscreen"
 
 # first time with new Project.toml, run this on the login node:
 # julia --project=. -e "using Pkg; Pkg.instantiate()"
 
-srun julia --project=. Julia-fresh-54.jl > output.log
+srun julia --project=. < benchmark.jl > benchmark.log
