@@ -1,12 +1,9 @@
-using Distributed
 using LinearAlgebra
-using Pkg
-Pkg.add("PyPlot")
-Pkg.add("StatsBase")
-using PyPlot
 using StatsBase
+using Plots
 
-function stochastic(β=2, n=200)
+ENV["QT_QPA_PLATFORM"]="offscreen"
+function stochastic(β=2, n=20)
     h = n^-(1/3)
     x = 0:h:10
     N = length(x)
@@ -16,10 +13,10 @@ function stochastic(β=2, n=200)
 end    
 
 println("Sequential version")
-t = 10000
-for β=[1, 2, 4, 10, 20]
+t = 100
+plot(title="DelftBlue Sequential version")
+for β=[1, 2]
     z = fit(Histogram, [stochastic(β) for i=1:t], -4:0.01:1).weights
-    plot(midpoints(-4:0.01:1), z/sum(z)/0.01)
+    plot!(midpoints(-4:0.01:1), z/sum(z)/0.01, label="β = $β")
 end
-title("DelftBlue Sequential version")
-savefig("sequential_version.png")
+savefig("delftblue_sequential_version.png")
