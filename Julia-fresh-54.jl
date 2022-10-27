@@ -1,7 +1,7 @@
 using Distributed
 using LinearAlgebra
 using StatsBase
-using PyPlot
+using Plots
 
 function stochastic(β=2, n=200)
     h = n^-(1/3)
@@ -14,13 +14,12 @@ end
 
 println("Sequential version")
 t = 10000
+plot(title="DelftBlue Sequential version")
 for β=[1, 2, 4, 10, 20]
     z = fit(Histogram, [stochastic(β) for i=1:t], -4:0.01:1).weights
-    plot(midpoints(-4:0.01:1), z/sum(z)/0.01)
+    plot!(midpoints(-4:0.01:1), z/sum(z)/0.01, label="β = $β")
 end
-title("DelftBlue Sequential version")
-savefig("sequential_version.png")
-clf()  # empty the Figure, ready for the next plot
+savefig("delftblue_sequential_version.png")
 
 # Readily adding more processors sharpens the Monte Carlo simulation,
 # computing 1024 times as many samples in hte same time
@@ -47,11 +46,11 @@ end
 
 println("@distributed version")
 @everywhere t = 10000
+plot(title="DelftBlue Distrubuted version with nprocs = $no_procs")
 for β=[1, 2, 4, 10, 20]
     z = @distributed (+) for p = 1:nprocs()
         fit(Histogram, [stochastic(β) for i=1:t], -4:0.01:1).weights
     end
-    plot(midpoints(-4:0.01:1), z/sum(z)/0.01)
+    plot!(midpoints(-4:0.01:1), z/sum(z)/0.01, label="β = $β")
 end
-title("DelftBlue Distrubuted version with nprocs = $no_procs")
-savefig("distributed_version.png")
+savefig("delftblue_distributed_version.png")
