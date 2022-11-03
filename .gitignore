@@ -2,3 +2,5 @@ Manifest.toml
 *.log
 *.out
 *.png
+time_*
+!time_XX*
