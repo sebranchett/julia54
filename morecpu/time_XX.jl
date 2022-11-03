@@ -1,11 +1,10 @@
 using Distributed
 
 addprocs(XX-1)
-no_procs = nprocs()
+@everywhere no_procs = nprocs()
 
-total_t = 100000
-t_per_proc = ifelse(total_t%no_procs==0, total_t÷no_procs, total_t÷no_procs + 1)
-@everywhere t = t_per_proc
+@everywhere total_t = 100000
+@everywhere t = ifelse(total_t%no_procs==0, total_t÷no_procs, total_t÷no_procs + 1)
 real_t = no_procs * t
 
 @everywhere using Pkg
