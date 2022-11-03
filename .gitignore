@@ -4,3 +4,4 @@ Manifest.toml
 *.png
 time_*
 !time_XX*
+.vscode/
