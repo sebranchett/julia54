@@ -5,3 +5,4 @@ Manifest.toml
 time_*
 !time_XX*
 .vscode/
+*.gz
