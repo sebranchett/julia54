@@ -2,7 +2,8 @@ Manifest.toml
 *.log
 *.out
 *.png
+*.gz
+*.csv
+.vscode/
 time_*
 !time_XX*
-.vscode/
-*.gz
