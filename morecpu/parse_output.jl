@@ -5,7 +5,7 @@ for file in filter(x->endswith(x, ".log"), readdir())
             # Number of procs, total number of points
             temp = split(lstrip(line), " ")
             print(temp[5], " ", temp[11], ", ")
-        elseif occursin("seconds", line)
+        elseif occursin("seconds", line) && occursin("compilation", line)
             # @time seconds, @time M allocations, @time memory, @time memory unit, @time % gc time, @time % compliation time
             line = replace(line, "(" => " ")
             line = replace(line, ")" => " ")
